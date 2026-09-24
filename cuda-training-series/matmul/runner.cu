@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "kernels/1_naive.cuh"
+#include "kernel.cuh"
 
 #define CUDA_CHECK(err)                                                        \
   if (err != cudaSuccess) {                                                    \
@@ -97,12 +97,12 @@ int main(int argc, char **argv) {
   // 1. Kernel 1: Naive
   // ----------------------------------------------------
   // Warmup
-  run_sgemm_naive(M, N, K, alpha, d_A, d_B, beta, d_C);
+  run_sgemm_coalescing(M, N, K, alpha, d_A, d_B, beta, d_C);
   CUDA_CHECK(cudaDeviceSynchronize());
 
   CUDA_CHECK(cudaEventRecord(start));
   for (int i = 0; i < repeats; ++i) {
-    run_sgemm_naive(M, N, K, alpha, d_A, d_B, beta, d_C);
+    run_sgemm_coalescing(M, N, K, alpha, d_A, d_B, beta, d_C);
   }
   CUDA_CHECK(cudaEventRecord(stop));
   CUDA_CHECK(cudaEventSynchronize(stop));
@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
   double naive_gflops = (total_flops * 1e-9) / (naive_ms * 1e-3);
 
   CUDA_CHECK(cudaMemcpy(h_C, d_C, bytes_C, cudaMemcpyDeviceToHost));
-  printf("[1. Naive]    Time: %7.3f ms | Perf: %8.2f GFLOPS | %5.2f%% of "
+  printf("[1. Global Memory Coalesced]    Time: %7.3f ms | Perf: %8.2f GFLOPS | %5.2f%% of "
          "cuBLAS | ",
          naive_ms, naive_gflops, (naive_gflops / cublas_gflops) * 100.0);
   verify_matrix(h_C_ref, h_C, M * N);
