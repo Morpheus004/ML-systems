@@ -1,0 +1,26 @@
+# Build artifacts
+build/
+bin/
+*.o
+*.obj
+*.out
+runner
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# CMake temporary files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Profiler & Debugger output
+*.nvvp
+*.nsys-rep
+*.qdrep
+*.sqlite

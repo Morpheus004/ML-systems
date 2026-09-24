@@ -1,0 +1,13 @@
+[
+  {
+    "arguments": [
+      "/usr/local/cuda/bin/nvcc",
+      "-std=c++17",
+      "-arch=sm_89",
+      "-c",
+      "runner.cu"
+    ],
+    "directory": "/home/pratham/projects/ML-systems/cuda/matmul",
+    "file": "/home/pratham/projects/ML-systems/cuda/matmul/runner.cu"
+  }
+]
