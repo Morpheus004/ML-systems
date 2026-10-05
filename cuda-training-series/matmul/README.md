@@ -18,7 +18,7 @@ Following Simon Boehm's [How to Optimize a CUDA Matmul Kernel for cuBLAS-like Pe
 | 1 | **Naive** | 1142.33 ms | 120.3 GFLOPS | 1.73% | One thread per element $C[x, y]$, uncoalesced global memory access |
 | 2 | **Coalescing** | 243.40 ms | 564.7 GFLOPS | 8.13% | Memory coalescing via contiguous row/col indexing |
 | 3 | **Shared Memory Cache** | 135.53 ms | 1,014.1 GFLOPS | 14.60% | Cache blocking in `__shared__` memory |
-| 4 | **1D Block Tiling** | - | - | - | Each thread computes multiple elements along a column |
+| 4 | **![1D Block Tiling](./notes/1d_block_tiling.md)** | 48.25 ms | 2,848.3 GFLOPS | 41.02% | Each thread computes multiple elements along a column |
 | 5 | **2D Block Tiling** | - | - | - | Each thread computes a $TM \times TN$ tile in registers |
 | 6 | **Vectorized Access** | - | - | - | `float4` vectorized loads (`LDG.E.128`) |
 | 7 | **Resolve Bank Conflicts**| - | - | - | Padding / layout tweaks to eliminate bank conflicts |

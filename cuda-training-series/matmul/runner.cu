@@ -97,12 +97,12 @@ int main(int argc, char **argv) {
   // 3. Kernel 3: shared memory
   // ----------------------------------------------------
   // Warmup
-  run_sgemm_shared_memory(M, N, K, alpha, d_A, d_B, beta, d_C);
+  run_sgemm_shared_memory_1d_tiling(M, N, K, alpha, d_A, d_B, beta, d_C);
   CUDA_CHECK(cudaDeviceSynchronize());
 
   CUDA_CHECK(cudaEventRecord(start));
   for (int i = 0; i < repeats; ++i) {
-    run_sgemm_shared_memory(M, N, K, alpha, d_A, d_B, beta, d_C);
+    run_sgemm_shared_memory_1d_tiling(M, N, K, alpha, d_A, d_B, beta, d_C);
   }
   CUDA_CHECK(cudaEventRecord(stop));
   CUDA_CHECK(cudaEventSynchronize(stop));
